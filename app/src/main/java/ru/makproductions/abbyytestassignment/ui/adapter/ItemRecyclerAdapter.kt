@@ -1,0 +1,3 @@
+package ru.makproductions.abbyytestassignment.ui.adapter
+
+class ItemRecyclerAdapter
