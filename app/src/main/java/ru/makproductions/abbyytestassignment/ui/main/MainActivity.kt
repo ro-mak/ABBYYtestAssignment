@@ -12,6 +12,7 @@ import ru.makproductions.abbyytestassignment.R
 import ru.makproductions.abbyytestassignment.model.entity.Cat
 import ru.makproductions.abbyytestassignment.presenter.main.MainPresenterImpl
 import ru.makproductions.abbyytestassignment.ui.adapter.CatRecyclerAdapter
+import ru.makproductions.abbyytestassignment.ui.item.CatItemActivity
 import ru.makproductions.abbyytestassignment.view.main.MainView
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createPresenter()
-        presenter.onCreate()
         val orientation = resources.configuration.orientation
         when (orientation) {
             Configuration.ORIENTATION_PORTRAIT -> {
@@ -35,10 +35,17 @@ class MainActivity : AppCompatActivity(), MainView {
                 layoutManager = GridLayoutManager(this, spanCount)
             }
         }
-
-        adapter = CatRecyclerAdapter()
+        adapter = CatRecyclerAdapter {
+            CatItemActivity.start(this, it)
+        }
         cats_recycler_view.layoutManager = layoutManager
         cats_recycler_view.adapter = adapter
+        presenter.onCreate()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFinishing) presenter.onFinish()
     }
 
     override fun showCats(cats: List<Cat>) {

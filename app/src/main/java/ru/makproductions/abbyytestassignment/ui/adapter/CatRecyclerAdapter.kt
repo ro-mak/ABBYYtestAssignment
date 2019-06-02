@@ -7,7 +7,8 @@ import ru.makproductions.abbyytestassignment.R
 import ru.makproductions.abbyytestassignment.model.entity.Cat
 import ru.makproductions.abbyytestassignment.ui.item.CatView
 
-class CatRecyclerAdapter : RecyclerView.Adapter<CatRecyclerAdapter.ItemViewHolder>() {
+class CatRecyclerAdapter(val onItemClick: ((Cat) -> Unit)? = null) :
+    RecyclerView.Adapter<CatRecyclerAdapter.ItemViewHolder>() {
     var cats: List<Cat> = listOf()
         set(value) {
             field = value
@@ -32,6 +33,7 @@ class CatRecyclerAdapter : RecyclerView.Adapter<CatRecyclerAdapter.ItemViewHolde
             val cat: Cat = cats[position]
             catView.catImageView.setImageBitmap(cat.image)
             catView.catTextView.text = cat.name
+            itemView.setOnClickListener({ onItemClick?.invoke(cat) })
         }
     }
 }

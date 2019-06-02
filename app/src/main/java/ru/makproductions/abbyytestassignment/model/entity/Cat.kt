@@ -2,7 +2,7 @@ package ru.makproductions.abbyytestassignment.model.entity
 
 import android.graphics.Bitmap
 
-class Cat(val name: String, val image: Bitmap)
+class Cat(val name: String, val image: Bitmap, val catId: Int)
 
 enum class Cats(val catName: String, val path: String) {
     Barsik("Барсик", "http://pngimg.com/uploads/cat/cat_PNG50546.png"),

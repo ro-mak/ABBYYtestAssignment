@@ -4,18 +4,20 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.graphics.BitmapFactory
 import android.util.Log
+import ru.makproductions.abbyytestassignment.model.cache.ICache
 import ru.makproductions.abbyytestassignment.model.entity.Cat
 import ru.makproductions.abbyytestassignment.model.entity.Cats
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CatsRepo {
+class CatsRepo(val cache: ICache) {
     private val catsLiveData = MutableLiveData<List<Cat>>()
     fun getCatsLiveData(): LiveData<List<Cat>> {
         return catsLiveData
     }
 
     suspend fun doInBackground(params: Array<Cats>?) {
+        cache.subscribeToData(catsLiveData)
         var httpURLConnection: HttpURLConnection
         val resultList: MutableList<Cat> = mutableListOf()
         try {
@@ -28,7 +30,7 @@ class CatsRepo {
                 httpURLConnection.connect()
                 val data: ByteArray = httpURLConnection.inputStream.readBytes()
                 val image = BitmapFactory.decodeByteArray(data, 0, data.size)
-                val catWithImage = Cat(name = cat.catName, image = image)
+                val catWithImage = Cat(name = cat.catName, image = image, catId = catId)
                 resultList.add(catWithImage)
             }
             onPostExecute(resultList)

@@ -6,25 +6,29 @@ import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import ru.makproductions.abbyytestassignment.App
+import ru.makproductions.abbyytestassignment.model.cache.ICache
 import ru.makproductions.abbyytestassignment.model.entity.Cat
 import ru.makproductions.abbyytestassignment.model.entity.Cats
 import ru.makproductions.abbyytestassignment.model.repo.CatsRepo
 import ru.makproductions.abbyytestassignment.view.main.MainView
 import javax.inject.Inject
 
-class MainPresenterImpl(viewState: MainView) : MainPresenter {
+class MainPresenterImpl(val viewState: MainView) : MainPresenter {
     @Inject
     lateinit var catsRepo: CatsRepo
+    @Inject
+    lateinit var cache: ICache
 
-    val catsObserver = Observer<List<Cat>>({ cats ->
-        cats?.let { viewState.showCats(it) } ?: let {
+    val catsObserver = Observer<List<Cat>> { cats ->
+        Log.e("catsObserver", "catch")
+        cats?.let { if (it.isEmpty()) loadAllCats() else viewState.showCats(it) } ?: let {
+            loadAllCats()
             Log.e(
-                "MainPresenter",
+                "Cache",
                 "cats are null"
             )
         }
-    })
-
+    }
 
     override fun loadAllCats() {
         Log.e("loadAllCats ", " outside")
@@ -36,8 +40,11 @@ class MainPresenterImpl(viewState: MainView) : MainPresenter {
     }
 
     override fun onCreate() {
-        catsRepo.getCatsLiveData().observeForever(catsObserver)
-        loadAllCats()
+        cache.getCatsLiveData().observeForever(catsObserver)
+    }
+
+    override fun onFinish() {
+        catsRepo.getCatsLiveData().removeObserver(catsObserver)
     }
 
 }
