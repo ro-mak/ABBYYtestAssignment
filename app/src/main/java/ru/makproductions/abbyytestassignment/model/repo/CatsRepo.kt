@@ -16,7 +16,7 @@ class CatsRepo(val cache: ICache) {
         return catsLiveData
     }
 
-    suspend fun doInBackground(params: Array<Cats>?) {
+    fun doInBackground(params: Array<Cats>?) {
         cache.subscribeToData(catsLiveData)
         var httpURLConnection: HttpURLConnection
         val resultList: MutableList<Cat> = mutableListOf()

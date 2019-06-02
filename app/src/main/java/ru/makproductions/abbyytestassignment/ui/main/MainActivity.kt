@@ -1,5 +1,6 @@
 package ru.makproductions.abbyytestassignment.ui.main
 
+import android.app.ActivityOptions
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -36,10 +37,19 @@ class MainActivity : AppCompatActivity(), MainView {
             }
         }
         adapter = CatRecyclerAdapter {
-            CatItemActivity.start(this, it)
+            CatItemActivity.start(
+                this,
+                it,
+                ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    findViewById(R.id.cat_image_view),
+                    getString(R.string.cat_transition_image_name)
+                ).toBundle()
+            )
         }
         cats_recycler_view.layoutManager = layoutManager
         cats_recycler_view.adapter = adapter
+        cats_swiperefresh.setOnRefreshListener { presenter.onSwipeRefresh() }
         presenter.onCreate()
     }
 
@@ -49,6 +59,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showCats(cats: List<Cat>) {
+        cats_swiperefresh.isRefreshing = false
         adapter.cats = cats
     }
 

@@ -17,7 +17,7 @@ class CatItemActivity : AppCompatActivity(), CatItemView {
 
     companion object {
         private val CAT_EXTRA = "CAT_NAME"
-        fun start(context: Context, cat: Cat? = null) {
+        fun start(context: Context, cat: Cat? = null, options: Bundle) {
             context.startActivity(Intent(context, CatItemActivity::class.java).apply {
                 cat?.let {
                     putExtra(
@@ -25,7 +25,7 @@ class CatItemActivity : AppCompatActivity(), CatItemView {
                         cat.catId
                     )
                 }
-            })
+            }, options)
         }
     }
 

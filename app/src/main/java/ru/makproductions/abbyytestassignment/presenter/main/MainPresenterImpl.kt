@@ -30,10 +30,13 @@ class MainPresenterImpl(val viewState: MainView) : MainPresenter {
         }
     }
 
+    override fun onSwipeRefresh() {
+        loadAllCats()
+    }
+
     override fun loadAllCats() {
-        Log.e("loadAllCats ", " outside")
+        Log.e("loadAllCats ", "start loading")
         val deffered = GlobalScope.async {
-            Log.e("loadAllCats ", " inside")
             catsRepo.doInBackground(Cats.values())
             Toast.makeText(App.instance, "Cats loaded", Toast.LENGTH_LONG).show()
         }
