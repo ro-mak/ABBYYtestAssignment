@@ -3,4 +3,5 @@
     <string name="cats_list_title">Cats!</string>
     <string name="cat_image_description">cat image</string>
     <string name="separator_line_description">separator line</string>
+    <string name="cat_transition_image_name">cat_transition_image</string>
 </resources>
