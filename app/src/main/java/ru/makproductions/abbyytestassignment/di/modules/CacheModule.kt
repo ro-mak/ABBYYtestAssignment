@@ -7,8 +7,10 @@ import ru.makproductions.abbyytestassignment.model.room.cache.RoomCache
 
 @Module
 class CacheModule {
+    private var roomCache: RoomCache? = null
     @Provides
     fun getCache(): ICache {
-        return RoomCache()
+        if (roomCache == null) roomCache = RoomCache()
+        return roomCache!!
     }
 }
