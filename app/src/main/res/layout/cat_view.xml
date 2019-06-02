@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+       tools:parentTag="ru.makproductions.abbyytestassignment.ui.item.CatView"
+>
+    <ImageView
+            android:id="@+id/cat_image_view"
+            android:layout_width="@dimen/cat_image_view_16_9_width"
+            android:layout_height="@dimen/cat_image_view_16_9_height"
+            android:layout_weight="1"
+            android:contentDescription="@string/cat_image_description"
+            android:layout_margin="@dimen/cat_image_view_margin"
+            android:padding="@dimen/cat_image_view_padding"
+            android:gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:background="@drawable/cat_image_frame"
+    />
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/cat_image_view_16_9_height"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+    >
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cat_text_highlight_line"
+                android:contentDescription="@string/separator_line_description"
+        />
+        <TextView
+                android:id="@+id/cat_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/cat_text_view_text_size"
+                android:layout_margin="@dimen/cat_text_view_margin"
+                android:padding="@dimen/cat_image_view_padding"
+                android:gravity="center"
+        />
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cat_text_highlight_line"
+                android:contentDescription="@string/separator_line_description"
+        />
+    </LinearLayout>
+
+</merge>
